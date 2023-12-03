@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  mysql:
+    image: mysql/mysql-server:latest
+    container_name: mysql
+    restart: always
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_USER=user
+        - MYSQL_PASSWORD=password
+
+  redis:
+    image: redis/redis-stack-server:latest
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - 46379:6379
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 1s
+      retries: 3
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    volumes:
+      - ./mongo:/data/db
+    ports:
+      - 27017:27017
