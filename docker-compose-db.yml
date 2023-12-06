@@ -24,12 +24,3 @@ services:
       interval: 5s
       timeout: 1s
       retries: 3
-
-  mongo:
-    image: mongo:latest
-    container_name: mongo
-    restart: always
-    volumes:
-      - ./mongo:/data/db
-    ports:
-      - 27017:27017
